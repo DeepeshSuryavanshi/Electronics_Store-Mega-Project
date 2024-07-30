@@ -1,0 +1,7 @@
+work are pending 
+
+App Header ,
+Buy button ,Addto cart button
+rootreducer ,
+react-redux,
+

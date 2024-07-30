@@ -1,0 +1,63 @@
+Categories
+----------
+categoryid pk
+categoryname
+icon
+// complate
+
+brands
+------
+categoryid fk
+brandid pk
+bradname
+logo
+// complate
+
+products
+---------
+categoryid fk
+brandid fk
+productid pk
+productname
+picture
+// complate
+
+
+productdetails
+---------------
+categoryid fk
+brandid fk
+productid fk
+productdetailsid pk
+modelno
+description
+color
+price
+offerprice
+stock
+status continue discontinue radio
+hsncode
+picture
+// UI complate  submit complate
+display non
+
+Banner
+-------
+bannerid pk
+bannername
+files
+// complate 
+
+categorybanner
+==============
+categorybannerid
+categoryid
+brandid
+files
+// complate
+
+
+
+
+
+

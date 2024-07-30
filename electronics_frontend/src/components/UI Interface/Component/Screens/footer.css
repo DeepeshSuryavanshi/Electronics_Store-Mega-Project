@@ -1,0 +1,29 @@
+footer{
+    width: 100%;
+    bottom: 0;
+    background-color: #1d1d1d;
+    color: #fff;
+    padding: 0px;
+}
+.main{
+    display: flex;
+    justify-content: space-evenly;
+    margin:10px;
+    padding: 10px;
+}
+.Grid1,.Grid2,.Grid3{
+    margin: 10px;
+    height: auto;
+}
+.Grid1{
+    justify-content: center;
+}
+.emailInput{
+    color: #1d1d1d;
+    background-color: #fff;
+    border-radius: 0.5rem;
+}
+.Grid1 .Icon{
+    flex-direction: row;
+    margin-top: .5rem;
+}
