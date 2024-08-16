@@ -1,5 +1,5 @@
 import axios from 'axios';
-const serverURL = `http://192.168.43.186:5000`;
+const serverURL = `http://192.168.0.2:5000`;
 
 // PostData to Server
 const PostData = async (url, body) => {

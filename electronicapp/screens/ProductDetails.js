@@ -42,11 +42,6 @@ function ProductDetailScreen(data) {
 
   var qty = isProductMatch()?.qty
 
-  // console.log("Quentity:",qty);
-  // console.log("Function check in the main :",isProductMatch());
-  // console.log('cart ProdctData in the Screen',cart);
-  // console.log('Prodct Data in the Screen',ProductData.productdetailsid,ProductData);
-
   // Image section data config
   var images = ProductData.image.split(',');
   const [mainImage, setMainImage] = useState(images[0]);
@@ -233,7 +228,6 @@ function ProductDetailScreen(data) {
             Background={'#000'}
           />
         </View>
-        {/* <Text style={{fontSize:20,color:'#fff'}} >{ProductData.productdetailsid}</Text> */}
       </ScrollView>
     </View>
   );
