@@ -60,9 +60,6 @@ export default function PlueMinusButton({
 
   const [count, setCount] = useState(qty);
 
-  // console.log("PM count:",count);
-  // console.log("PM qty:",qty);
-
   const handleAdd = () => {
     var c = count + 1;
     setCount(c);
@@ -75,7 +72,7 @@ export default function PlueMinusButton({
   };
 
   useEffect(()=>{
-    setCount(0)
+    setCount(qty)
   },[])
   return (
     <View>

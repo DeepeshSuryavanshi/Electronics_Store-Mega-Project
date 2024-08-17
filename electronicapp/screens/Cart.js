@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   SafeAreaView,
+  Image,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -10,12 +11,13 @@ import {
   View,
 } from 'react-native';
 import { useSelector } from 'react-redux';
-import Cartproductcard from '../components/UIComponents/cartproductcard';
+import {serverURL, PostData, GetData} from "../services/FetchNodeServices"
 
 function Cart(params) {
     var cart = useSelector(state => state.mycart);
     var data = Object.values(cart)
-
+    console.log("cart data: ",data);
+    
 
     return(
         <View style={styles.main}>
@@ -24,11 +26,23 @@ function Cart(params) {
                 <Text style={{ textAlign: 'start', color: '#fff', fontSize: 20 }} > My Cart</Text>
             </View>
             <View style={styles.productcard} >
-                <Cartproductcard data={data} />
+                <ProductCard data={data} />
             </View>
         </View>
     )
 }
+
+const ProductCard = ({data})=>{
+    let x = data
+    console.log('Data from cart product in the prouductcard',x);
+    return x.map((item)=>{
+        return(  <View style={styles.productcard}>
+            <Image src={`${serverURL}/images/${item.image.split(',')[0]}`} />
+        </View>)
+    })
+}
+
+
 // main end
 const styles = StyleSheet.create({
     main:{
