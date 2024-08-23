@@ -127,7 +127,7 @@ function ProductDetailScreen(data) {
               horizontal
               data={images}
               renderItem={item => <ItemView Data={item.item} />}
-              keyExtractor={item => item.index}
+              keyExtractor={item => item}
             />
           </View>
         </View>

@@ -9,15 +9,17 @@ import {
   useColorScheme,
   TouchableOpacity,
   View,
+  Dimensions,
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import {serverURL, PostData, GetData} from "../services/FetchNodeServices"
+const {height,width} = Dimensions.get('window')
+import PoductListCart from '../components/UIComponents/PoductListCart';
 
-function Cart(params) {
+function Cart() {
     var cart = useSelector(state => state.mycart);
     var data = Object.values(cart)
-    console.log("cart data: ",data);
-    
+    var key = Object.keys(cart)
 
     return(
         <View style={styles.main}>
@@ -25,21 +27,12 @@ function Cart(params) {
                 <Text style={{ textAlign: 'start', color: '#fff', fontSize: 20 }} >Home {'>'}</Text>
                 <Text style={{ textAlign: 'start', color: '#fff', fontSize: 20 }} > My Cart</Text>
             </View>
-            <View style={styles.productcard} >
-                <ProductCard data={data} />
-            </View>
+            <Text style={{ textAlign: 'right',marginRight:10, color: '#000', fontSize: 20 }} > Item:{key.length}</Text>
+            <ScrollView style={styles.MainDisplayProduct} >
+                <PoductListCart Data={data}/>
+            </ScrollView>
         </View>
     )
-}
-
-const ProductCard = ({data})=>{
-    let x = data
-    console.log('Data from cart product in the prouductcard',x);
-    return x.map((item)=>{
-        return(  <View style={styles.productcard}>
-            <Image src={`${serverURL}/images/${item.image.split(',')[0]}`} />
-        </View>)
-    })
 }
 
 
@@ -58,11 +51,8 @@ const styles = StyleSheet.create({
         paddingTop:5,
         paddingLeft:5
     },
-    // product cart styles here start
-    productcard:{
-        // backgroundColor:'royalblue',
-        padding:10,
-        width:'100%'
+    MainDisplayProduct:{
+        flex:1
     }
 })
 export default Cart;

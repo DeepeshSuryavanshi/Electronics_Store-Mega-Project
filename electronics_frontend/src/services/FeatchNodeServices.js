@@ -1,7 +1,7 @@
 // axios for server connection node backend
 import axios from "axios";
 // server URL of node backend
-const serverURL = "http://192.168.29.253:5000";
+const serverURL = "http://192.168.31.168:5000";
 const postData = async (url, body) => {
   try {
     // console.log("call backend server data=>", "URL", url, "Body", body);

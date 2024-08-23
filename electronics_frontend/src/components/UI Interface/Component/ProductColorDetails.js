@@ -9,7 +9,7 @@ export default function ProductColorDetails(props)
     const [details,setDetails]=useState([])
    
      const handleChangeProduct=(id)=>{
-       fetchDetails(id)
+      // fetchDetails(id)
      }
      const fetchProductDetails=async()=>{
         var result=await postData('useinter/fetch_product_details_by_productid',{productid:product.productid})
