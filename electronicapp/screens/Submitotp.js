@@ -11,9 +11,11 @@ const SubmitOPTScreen = (data) => {
   const submitOTP = async () => {
       if(OTP == otp){
          const user = await PostData('useraccount/check_account',{mobileno:Mobile});
+         console.log(user);
+         
          if (user.status) {
-            alert("user get by DB")
-            navigation.navigate('Mainscreen')
+            alert(`login Sucessfull ${user.data[0].username}`)
+            navigation.navigate('cart')
          }
          else{
           alert(user.message)
