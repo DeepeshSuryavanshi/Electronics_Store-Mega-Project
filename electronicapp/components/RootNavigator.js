@@ -4,17 +4,18 @@ import {
   DrawerItemList,
   DrawerItem,
 } from '@react-navigation/drawer';
+import { serverURL } from '../services/FetchNodeServices';
+import {NavigationContainer} from '@react-navigation/native';
+import {Image, Text, View} from 'react-native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from '../screens/Home';
+import MCI from 'react-native-vector-icons/MaterialCommunityIcons';
 import Cart from '../screens/Cart';
 import ProductDetailScreen from '../screens/ProductDetails';
 import AppHeader from './UIComponents/AppHeader';
 import Login from '../screens/Login';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {Image, Text, View} from 'react-native';
-import MCI from 'react-native-vector-icons/MaterialCommunityIcons';
-import { serverURL } from '../services/FetchNodeServices';
-
+import SubmitOPTScreen from '../screens/Submitotp';
+import SignIn from '../screens/SignIn';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -31,13 +32,14 @@ export default function RootNavigator(props) {
           component={Home}
           options={{
           headerShown: false,
-          drawerIcon: () => <MCI name={'home'} size={24} />,
+          drawerIcon: () => <MCI name={'menu'} size={20} />,
           }}
         />
       </Drawer.Navigator>
     );
   };
 
+// Drowser component
   function CustomDrawerContent(props) {
     return (
       <DrawerContentScrollView {...props}>
@@ -98,6 +100,16 @@ export default function RootNavigator(props) {
          component={Login}
          name='Login'
          options={{headerShown:false}}
+        />
+        <Stack.Screen
+         component={SubmitOPTScreen}
+         name='Submiotp'
+         options={{headerShown:false}}
+        />
+        <Stack.Screen
+        component={SignIn}
+        name='UserSignin'
+        options={{headerShown:false}}
         />
       </Stack.Navigator>
     </NavigationContainer>

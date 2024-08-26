@@ -19,7 +19,7 @@ router.post("/submit_useraccount", function (req, res) {
       ],
       function (error, result) {
         if (error) {
-          // console.log("error of submit user registration", error);
+          console.log("error of submit user registration", error);
           res
             .status(200)
             .json({ status: false, message: "User registration  not Submit!" });
@@ -27,7 +27,7 @@ router.post("/submit_useraccount", function (req, res) {
           // console.log("result of submit user Registration", result);
           res.status(200).json({
             status: true,
-            message: "Account Registration Sucessful.",
+            message: "Account Registration Sucessfully.",
             data: result,
           });
         }
@@ -41,7 +41,7 @@ router.post("/submit_useraccount", function (req, res) {
 //check user account 
 router.post('/check_account',function(req,res){
   try{ 
-    // console.log('data from body xxxxxxx',req.body)
+    console.log('data from body xxxxxxx',req.body)
     pool.query('select * from useraccount where mobileno=? or emailid=?',[req.body.mobileno,req.body.mobileno],
     function(error,result)
               {
@@ -62,7 +62,7 @@ router.post('/check_account',function(req,res){
               })
   }
   catch(e)
-  {  console.log('xxxxxxxxxxxxxxxxx',e)
+  {
      res.status(200).json({status:false,message:'DataBase Error'})
   }
 })

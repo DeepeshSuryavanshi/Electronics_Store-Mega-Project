@@ -13,12 +13,13 @@ import EIcons from 'react-native-vector-icons/Feather';
 const {width, height} = Dimensions.get('window');
 
 
-function TextBox({error,Icon,helperTest, w = 0.9, message, isSecure = false,Type = 'text'}) {
+function TextBox({error,Icon,helperTest, w = 0.9, h = 0.08,message, isSecure = false,Type = 'text'}) {
   //  styles
 const styles = StyleSheet.create({
     content:{
       backgroundColor:'#fff',
         width: width * w,
+        height:height*h,
         padding:2,borderWidth:1,
         borderRadius:5,
         borderColor:error?'#e74c3c':color,

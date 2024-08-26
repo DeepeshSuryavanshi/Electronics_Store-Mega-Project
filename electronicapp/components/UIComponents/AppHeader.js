@@ -13,6 +13,7 @@ export default function AppHeader(props) {
   var navigation = useNavigation();
   var cartItems=useSelector((state)=>state.mycart)
   var keys=Object.keys(cartItems)
+  let Mobile = "1234567890"
   return (
     <View style={styles.main}>
         <View style={styles.topContainer}>
@@ -23,7 +24,11 @@ export default function AppHeader(props) {
             <Image style={styles.logoImage} source={require('../../assets/logo.png')}  />
         </View>
         <View style={styles.iCon}>
-            <MCI name='account' size={30} color={"#14DBA8"} />
+            {/* acccount icon */}
+            <TouchableOpacity onPress={()=>navigation.navigate("Login")} >
+                 <MCI name='account' size={30} color={"#14DBA8"} />
+            </TouchableOpacity>
+            {/* Cart icon  */}
             <TouchableOpacity onPress={()=>navigation.navigate("cart")}>
             <View style={styles.CartIcon}>
                 <View style={{position:'absolute',top:-10,right:-2,zIndex:3,justifyContent:'center',alignItems:'center', width:18,height:18,borderRadius:9,backgroundColor:'#fff'}} >

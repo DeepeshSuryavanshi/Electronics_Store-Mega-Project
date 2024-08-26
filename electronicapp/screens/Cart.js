@@ -15,8 +15,10 @@ import { useSelector } from 'react-redux';
 import {serverURL, PostData, GetData} from "../services/FetchNodeServices"
 const {height,width} = Dimensions.get('window')
 import PoductListCart from '../components/UIComponents/PoductListCart';
+import PriceDetails from '../components/UIComponents/PriceDetails';
 
 function Cart() {
+    const [pageRefresh,setPageRefresh]=React.useState(false)
     var cart = useSelector(state => state.mycart);
     var data = Object.values(cart)
     var key = Object.keys(cart)
@@ -28,8 +30,9 @@ function Cart() {
                 <Text style={{ textAlign: 'start', color: '#fff', fontSize: 20 }} > My Cart</Text>
             </View>
             <Text style={{ textAlign: 'right',marginRight:10, color: '#000', fontSize: 20 }} > Item:{key.length}</Text>
-            <ScrollView style={styles.MainDisplayProduct} >
-                <PoductListCart Data={data}/>
+            <ScrollView style={styles.MainDisplayProduct} showsVerticalScrollIndicator={false}  >
+                <PoductListCart pageRefresh={pageRefresh} setPageRefresh={setPageRefresh} Data={data}/>
+                <PriceDetails pageRefresh={pageRefresh} setPageRefresh={setPageRefresh} />
             </ScrollView>
         </View>
     )
@@ -52,7 +55,7 @@ const styles = StyleSheet.create({
         paddingLeft:5
     },
     MainDisplayProduct:{
-        flex:1
+       marginBottom:10
     }
 })
 export default Cart;
