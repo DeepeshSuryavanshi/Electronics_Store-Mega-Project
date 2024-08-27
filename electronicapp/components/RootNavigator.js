@@ -16,12 +16,13 @@ import AppHeader from './UIComponents/AppHeader';
 import Login from '../screens/Login';
 import SubmitOPTScreen from '../screens/Submitotp';
 import SignIn from '../screens/SignIn';
-
+import { CheckSyncData,getSyncKeys } from '../storage/AsyncDataStore';
+import { useEffect, useState } from 'react';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 export default function RootNavigator(props) {
-  
+
   const ProjectDrawer = () => {
     return (
       <Drawer.Navigator
@@ -41,6 +42,36 @@ export default function RootNavigator(props) {
 
 // Drowser component
   function CustomDrawerContent(props) {
+    
+  const [userData,setUserData]=useState({            
+    useraccountid: 0,
+    emailid:'',
+    mobileno: '',
+    username:'',
+    addres:'',
+    pincode:'',
+    title: ''
+  })  
+  
+  const  Getuserdata = async ()=>{
+    var key= await CheckSyncData()
+    var data= await getSyncKeys(key[0])
+    
+    console.log("User Data From AsyncStorage",data)
+    
+    if(data == null)
+    console.log("Userdata is null",data);
+    else if
+    (key)setUserData(data); 
+
+  }
+
+  useEffect(() => {
+    Getuserdata()
+}, []);
+
+console.log("Usedata in the custom Drowser",userData.username);
+
     return (
       <DrawerContentScrollView {...props}>
         <View
@@ -53,11 +84,11 @@ export default function RootNavigator(props) {
               width: 100,
               height: 100,
             }}
-            source={{uri:`${serverURL}/images/Admin%20Pic/TheDeepeshx.jpeg`}}
+            source={{uri:`${serverURL}/images/user.png`}}
           />
-          <Text style={{fontWeight: 'bold'}}>{'Deepesh Singh'}</Text>
-          <Text>+91 8516815519</Text>
-          <Text style={{fontSize: 12}}>{'Deepeshsuryavanshi56@gmail.com'}</Text>
+          <Text style={{fontWeight: 'bold'}}>{userData.username}</Text>
+          <Text>+91 {userData.mobileno}</Text>
+          <Text style={{fontSize: 12}}>{userData.emailid}</Text>
         </View>
 
         <DrawerItemList {...props} />
@@ -72,6 +103,7 @@ export default function RootNavigator(props) {
         />
         <DrawerItem
           label="Logout"
+          onPress={()=>alert("shore to log out")}
           icon={() => <MCI name={'logout'} size={24} />}
         />
       </DrawerContentScrollView>

@@ -28,6 +28,7 @@ import { PostData } from '../services/FetchNodeServices';
     const result = await PostData('useraccount/submit_useraccount',body)
     if (result.status) {
         alert(result.message)
+        await storeDatasync(mobileNo,JSON.stringify(body))
         navigation.navigate('cart')
     }
     else{

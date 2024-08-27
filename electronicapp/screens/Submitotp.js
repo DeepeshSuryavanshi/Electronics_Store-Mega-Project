@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { GetData,PostData } from '../services/FetchNodeServices';
+import { storeDatasync } from '../storage/AsyncDataStore';
 
 const SubmitOPTScreen = (data) => {
   var navigation = useNavigation()
@@ -11,10 +12,9 @@ const SubmitOPTScreen = (data) => {
   const submitOTP = async () => {
       if(OTP == otp){
          const user = await PostData('useraccount/check_account',{mobileno:Mobile});
-         console.log(user);
-         
          if (user.status) {
-            alert(`login Sucessfull ${user.data[0].username}`)
+            alert(`login Sucessfull ${user.data[0].username.split(' ')[0]}`)
+            await storeDatasync(user.data[0].mobileno,JSON.stringify(user.data[0]))
             navigation.navigate('cart')
          }
          else{

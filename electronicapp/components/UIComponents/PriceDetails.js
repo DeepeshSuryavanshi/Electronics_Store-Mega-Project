@@ -4,8 +4,9 @@ import {useState,useEffect} from 'react'
 import MyButton from "./Button";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
-// import RazorpayCheckout from 'react-native-razorpay';
+import RazorpayCheckout from 'react-native-razorpay';
 import { CheckSyncData,getSyncKeys } from "../../storage/AsyncDataStore";
+import { serverURL } from "../../services/FetchNodeServices";
 var {width,height}=Dimensions.get('window');
 
 export default function PriceDetails(props){
@@ -30,24 +31,26 @@ export default function PriceDetails(props){
     var discountAmt = totalamount-amount
     var netamount = totalamount-discountAmt
     
-    useEffect(async() => {
-         var key= await CheckSyncData()
-         var data= await getSyncKeys(key[0])
-         console.log("USSSEER",data)
-        if(key)
-        {  setUserData(data) 
-           setBtnStatus('Make Payment')
-        }    
-    }, []);
+    const  GetUSerdata = async ()=>{
+        var key= await CheckSyncData()
+        var data= await getSyncKeys(key[0])
+        console.log("User Data From AsyncStorage",data)
+       if(key)
+       {  setUserData(data) 
+          setBtnStatus('Make Payment')
+       }
+       return null;
+    }
 
     useEffect(() => {
         props.setPageRefresh(!props.pageRefresh);
+        GetUSerdata()
     }, []);
 
     const makePayment=async()=>{
         var options = {
             description: 'Credits towards consultation',
-            image: 'http://localhost:5000/images/logo.png',
+            image: `${serverURL}/images/logo.png`,
             currency: 'INR',
             key: "rzp_test_GQ6XaPC6gMPNwH", // Your api key
             amount: netamount*100,
@@ -62,28 +65,31 @@ export default function PriceDetails(props){
        RazorpayCheckout.open(options).then((data) => {
             // handle success
             alert(`Success: ${data.razorpay_payment_id}`);
-            dispatch({type:'CLEAR_CART',payload:[]})
-          
+            dispatch({type:'REMOVE_PRODUCT',payload:[]})
 
           }).catch((error) => {
             // handle failure
-            alert(`Error: ${error.code} | ${error.description}`);
+            alert(`Error: ${error} | ${error.description}`);
           });
 
     }
 
-    const handlePress= async () => {
+    const handlePress = async () => {
         var key= await CheckSyncData()
+        console.log("HandlePress Key Featch Key",key);
+        
         if(key)
         {
-        //    makePayment()
-        alert("make payment")
+            makePayment()
+            // alert("make payment")
         }    
         else{
             navigation.navigate("Login")
         }
 
     }
+    console.log("Userdaa iin priceseecion sonctaxxxxxxx", userData);
+    
     return(<View>
         {keys.length==0 ? 
             <View style={{alignItems:'center',justifyContentL:'center',marginTop:60}}>

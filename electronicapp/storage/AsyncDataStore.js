@@ -5,43 +5,43 @@ import AsyncStorage from "@react-native-community/async-storage";
 
 // checking data
 export async function CheckSyncData(){
-  console.log("Check Async Data get all Keys Run");
+  console.log("CheckAsyncStorage Run");
     try {
         const key = await AsyncStorage.getAllKeys();
-        console.log("KEYSSS_GET",key.length);
+        console.log("Keys Get from Check Storage",key.length);
         if(key.length == 0) return false;
         else return key;
         
     } catch (error) {
-        console.log('Error:Key_Getting Errors',error);
+        console.log('Key_Getting CheckAsync Storage',error);
         return false;
     }
 }
 // getkeys
 export  async function getSyncKeys(key) {
-  console.log("get Async Data get keys all Keys Run");
+  console.log("get Async Data Run");
     try {
-        const Keys = await AsyncStorage.getItem(`${key}`)
-        console.log("Async Data :",value);
-            if (Keys!== null) {
-                var userData = JSON.parse(Keys)
+        const value = await AsyncStorage.getItem(`${key}`)
+        console.log("Get Async Data:",value);
+            if (value!== null) {
+                var userData = JSON.parse(value)
                 console.log("User data from asyn: ",userData);
                 return userData;
             } else {
-                console.log("No User FOund in Async:",Keys);
+                console.log("No User FOund in Async:",value);
                 return null;
             }
     } catch (error) {
-        console.log("Error IN Get Key: ",error);
+        console.log("Error IN GetSyncKey: ",error);
         return null;
     }
     
 }
 // set data 
-export   async function storeDatasync(key, body) {
-  console.log("store Async keys Run");
+export async function storeDatasync(key, body) {
+  console.log("store Async Data Run");
     try {
-      await AsyncStorage.setItem(`${key}`, JSON.stringify(body));
+      await AsyncStorage.setItem(`${key}`,body);
       return {status:true,message:'sucess'}
     } catch (e) {
       console.log('Error in saving data', e);
@@ -50,7 +50,7 @@ export   async function storeDatasync(key, body) {
   }
  
 // Remove Data
-export   async function removeDatasync(key) {
+export async function removeDatasync(key) {
   console.log("Remove all Keys Run");
     try {
       const data = await AsyncStorage.removeItem(`${key}`);
