@@ -5,10 +5,8 @@ import AsyncStorage from "@react-native-community/async-storage";
 
 // checking data
 export async function CheckSyncData(){
-  console.log("CheckAsyncStorage Run");
     try {
         const key = await AsyncStorage.getAllKeys();
-        console.log("Keys Get from Check Storage",key.length);
         if(key.length == 0) return false;
         else return key;
         
@@ -19,16 +17,12 @@ export async function CheckSyncData(){
 }
 // getkeys
 export  async function getSyncKeys(key) {
-  console.log("get Async Data Run");
     try {
         const value = await AsyncStorage.getItem(`${key}`)
-        console.log("Get Async Data:",value);
             if (value!== null) {
                 var userData = JSON.parse(value)
-                console.log("User data from asyn: ",userData);
                 return userData;
             } else {
-                console.log("No User FOund in Async:",value);
                 return null;
             }
     } catch (error) {
@@ -39,9 +33,8 @@ export  async function getSyncKeys(key) {
 }
 // set data 
 export async function storeDatasync(key, body) {
-  console.log("store Async Data Run");
     try {
-      await AsyncStorage.setItem(`${key}`,body);
+      await AsyncStorage.setItem(`${key}`,JSON.stringify(body));
       return {status:true,message:'sucess'}
     } catch (e) {
       console.log('Error in saving data', e);

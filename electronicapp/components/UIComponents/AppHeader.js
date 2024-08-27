@@ -18,7 +18,9 @@ export default function AppHeader(props) {
     <View style={styles.main}>
         <View style={styles.topContainer}>
         <View>
-            <MCI name='menu' size={40} color={"#fff"} />
+            <MCI name='menu' size={40} 
+            onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+            color={"#fff"} />
         </View>
         <View style={styles.logoContainer}>
             <Image style={styles.logoImage} source={require('../../assets/logo.png')}  />

@@ -50,7 +50,7 @@ function ProductDetailScreen(data) {
         if (value == 0) {
           dispatch({
             type: 'REMOVE_PRODUCT',
-            payload: [ProductData.productdetailsid],
+            payload:[ProductData.productdetailsid],
           });
         } else {
           ProductData['qty'] = value;
@@ -63,10 +63,10 @@ function ProductDetailScreen(data) {
   };
 
   // item view in the product cart
-  const ItemView = Data => {
+  const ItemView = (Data,index) => {
     let image = Data.Data;
     return (
-      <TouchableOpacity onPress={() => setMainImage(image)}>
+      <TouchableOpacity key={index} onPress={() => setMainImage(image)}>
         <View style={styles.imageItemview}>
           <Image
             style={styles.SmallimageStyle}
@@ -85,6 +85,7 @@ function ProductDetailScreen(data) {
     <View style={styles.main}>
       <ScrollView>
         <View
+        key={ProductData.productdetailsid}
           style={{
             flexDirection: 'row',
             alignItems: 'center',
@@ -126,7 +127,7 @@ function ProductDetailScreen(data) {
             <FlatList
               horizontal
               data={images}
-              renderItem={item => <ItemView Data={item.item} />}
+              renderItem={(item,index) => <ItemView Data={item.item} index={index} />}
               keyExtractor={item => item}
             />
           </View>

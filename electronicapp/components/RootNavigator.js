@@ -6,7 +6,7 @@ import {
 } from '@react-navigation/drawer';
 import { serverURL } from '../services/FetchNodeServices';
 import {NavigationContainer} from '@react-navigation/native';
-import {Image, Text, View} from 'react-native';
+import {Alert, Image, Text, View} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from '../screens/Home';
 import MCI from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -16,12 +16,28 @@ import AppHeader from './UIComponents/AppHeader';
 import Login from '../screens/Login';
 import SubmitOPTScreen from '../screens/Submitotp';
 import SignIn from '../screens/SignIn';
-import { CheckSyncData,getSyncKeys } from '../storage/AsyncDataStore';
-import { useEffect, useState } from 'react';
+import { CheckSyncData,getSyncKeys, removeDatasync } from '../storage/AsyncDataStore';
+import { useDebugValue, useEffect, useState } from 'react';
+import { useSelector,useDispatch } from 'react-redux';
+
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 export default function RootNavigator(props) {
+// Data of user setup
+var dispatch = useDispatch()
+const [userData,setUserData]=useState({})  
+
+const  Getuserdata = async ()=>{
+  var key= await CheckSyncData()
+  var data= await getSyncKeys(key[0])
+  JSON.parse(data);
+  if(data == null)console.log("Userdata is null",data);
+  else setUserData(JSON.parse(data));
+}
+useEffect(() => {
+  Getuserdata()
+}, []);
 
   const ProjectDrawer = () => {
     return (
@@ -39,38 +55,14 @@ export default function RootNavigator(props) {
       </Drawer.Navigator>
     );
   };
-
+  dispatch({type:'ADD_USER',payload:[userData["mobileno"] ,userData]});
 // Drowser component
   function CustomDrawerContent(props) {
-    
-  const [userData,setUserData]=useState({            
-    useraccountid: 0,
-    emailid:'',
-    mobileno: '',
-    username:'',
-    addres:'',
-    pincode:'',
-    title: ''
-  })  
-  
-  const  Getuserdata = async ()=>{
-    var key= await CheckSyncData()
-    var data= await getSyncKeys(key[0])
-    
-    console.log("User Data From AsyncStorage",data)
-    
-    if(data == null)
-    console.log("Userdata is null",data);
-    else if
-    (key)setUserData(data); 
 
-  }
+    function handleLogOut(){
+      removeDatasync(userData?.mobileno)
+    }
 
-  useEffect(() => {
-    Getuserdata()
-}, []);
-
-console.log("Usedata in the custom Drowser",userData.username);
 
     return (
       <DrawerContentScrollView {...props}>
@@ -86,9 +78,9 @@ console.log("Usedata in the custom Drowser",userData.username);
             }}
             source={{uri:`${serverURL}/images/user.png`}}
           />
-          <Text style={{fontWeight: 'bold'}}>{userData.username}</Text>
-          <Text>+91 {userData.mobileno}</Text>
-          <Text style={{fontSize: 12}}>{userData.emailid}</Text>
+          <Text style={{fontWeight: 'bold'}}>{userData?.username}</Text>
+          <Text>+91 {userData?.mobileno}</Text>
+          <Text style={{fontSize: 12}}>{userData?.emailid}</Text>
         </View>
 
         <DrawerItemList {...props} />
@@ -103,7 +95,7 @@ console.log("Usedata in the custom Drowser",userData.username);
         />
         <DrawerItem
           label="Logout"
-          onPress={()=>alert("shore to log out")}
+          onPress={()=>handleLogOut()}
           icon={() => <MCI name={'logout'} size={24} />}
         />
       </DrawerContentScrollView>

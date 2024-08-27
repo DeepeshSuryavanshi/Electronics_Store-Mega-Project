@@ -11,11 +11,14 @@ var {width,height}=Dimensions.get('window');
 
 export default function PriceDetails(props){
     var productFromRedux = useSelector(state=>state.mycart)
+    var user = useSelector(state=>state.user)
     var product = Object.values(productFromRedux)
     var keys = Object.keys(productFromRedux)
     var navigation=useNavigation()
     var dispatch=useDispatch()
 
+    console.log("User data from redux:",Object.values(user)[1]);
+    
     const [btnStatus, setBtnStatus] = useState('Continue to Buy');
     const [userData,setUserData]=useState({})
 
@@ -31,12 +34,11 @@ export default function PriceDetails(props){
     var discountAmt = totalamount-amount
     var netamount = totalamount-discountAmt
     
-    const  GetUSerdata = async ()=>{
+    const  GetUSerdata = async ()=>{    
         var key= await CheckSyncData()
         var data= await getSyncKeys(key[0])
-        console.log("User Data From AsyncStorage",data)
        if(key)
-       {  setUserData(data) 
+       {  setUserData(data)
           setBtnStatus('Make Payment')
        }
        return null;
@@ -44,7 +46,7 @@ export default function PriceDetails(props){
 
     useEffect(() => {
         props.setPageRefresh(!props.pageRefresh);
-        GetUSerdata()
+        GetUSerdata();
     }, []);
 
     const makePayment=async()=>{
@@ -65,8 +67,8 @@ export default function PriceDetails(props){
        RazorpayCheckout.open(options).then((data) => {
             // handle success
             alert(`Success: ${data.razorpay_payment_id}`);
-            dispatch({type:'REMOVE_PRODUCT',payload:[]})
-
+            dispatch({type:'CLEAR_CART'})
+            navigation.navigate('Mainscreen')
           }).catch((error) => {
             // handle failure
             alert(`Error: ${error} | ${error.description}`);
@@ -76,19 +78,9 @@ export default function PriceDetails(props){
 
     const handlePress = async () => {
         var key= await CheckSyncData()
-        console.log("HandlePress Key Featch Key",key);
-        
-        if(key)
-        {
-            makePayment()
-            // alert("make payment")
-        }    
-        else{
-            navigation.navigate("Login")
-        }
-
+        if(key) makePayment()   
+        else navigation.navigate("Login")  
     }
-    console.log("Userdaa iin priceseecion sonctaxxxxxxx", userData);
     
     return(<View>
         {keys.length==0 ? 
