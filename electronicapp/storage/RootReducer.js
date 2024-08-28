@@ -31,7 +31,7 @@ export default function RootReducer(State=initialState,action)
         
         case "ADD_USER":
         State.user[action.payload[0]]=action.payload[1]
-        console.log("STATE:",State.user);
+        // console.log("STATE:",State.user);
         return{user:State.user,mycart:State.mycart}
         
         case "REMOVE_USER":

@@ -1,8 +1,5 @@
 import AsyncStorage from "@react-native-community/async-storage";
 
-// import { AsyncStorage } from 'react-native';
-// import AsyncStorage from '@react-native-community/async-storage';
-
 // checking data
 export async function CheckSyncData(){
     try {
@@ -44,10 +41,8 @@ export async function storeDatasync(key, body) {
  
 // Remove Data
 export async function removeDatasync(key) {
-  console.log("Remove all Keys Run");
     try {
       const data = await AsyncStorage.removeItem(`${key}`);
-      console.log("Data in the remove async storage",{data});
     } catch (e) {
       console.log('Error in saving data',e);
       return false;

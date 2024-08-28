@@ -14,6 +14,7 @@ import BrandSliderComponent from '../components/UIComponents/BrandSliderComponen
 import SerchBar from '../components/UIComponents/SerchBar';
 import MainSlider from '../components/UIComponents/MainSlider';
 import ProductCard from '../components/UIComponents/ProductCard';
+import Footer from '../components/UIComponents/Footer';
 
 var data = [
   'a1.webp',
@@ -57,6 +58,7 @@ function Home() {
       <CategorySliderComponent title={"Categoryes"} DATA={Category} />
       <ProductCard title={"Top Product"} DATA={Products}/>
       <BrandSliderComponent title={"Top Brands"}  DATA={Brand}/>
+      <Footer/>
       </ScrollView>
     </View>
   );

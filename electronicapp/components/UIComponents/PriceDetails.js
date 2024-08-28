@@ -17,8 +17,6 @@ export default function PriceDetails(props){
     var navigation=useNavigation()
     var dispatch=useDispatch()
 
-    console.log("User data from redux:",Object.values(user)[1]);
-    
     const [btnStatus, setBtnStatus] = useState('Continue to Buy');
     const [userData,setUserData]=useState({})
 
@@ -47,7 +45,7 @@ export default function PriceDetails(props){
     useEffect(() => {
         props.setPageRefresh(!props.pageRefresh);
         GetUSerdata();
-    }, []);
+    }, [userData]);
 
     const makePayment=async()=>{
         var options = {
@@ -71,7 +69,7 @@ export default function PriceDetails(props){
             navigation.navigate('Mainscreen')
           }).catch((error) => {
             // handle failure
-            alert(`Error: ${error} | ${error.description}`);
+            alert(`Error: ${error}`);
           });
 
     }
