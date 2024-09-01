@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
         textAlign:'left',
     },
     ItemView:{
-        height:height*0.35,
+        height:height*0.2,
         width:width*0.45,
         justifyContent:'center',
         alignItems:'center',
